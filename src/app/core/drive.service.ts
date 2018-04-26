@@ -15,16 +15,25 @@ export class DriveService {
   private foldersSubject = new BehaviorSubject([]);
   public lastPage: Observable<boolean>;
   private lastPageSubject = new BehaviorSubject(true);
+  public loading: Observable<boolean>;
+  private loadingSubject = new BehaviorSubject(false);
   private nextPageToken: string;
-  private currentFolder = 'root';
+  private selectedFolders = ['root'];
+  public folderNames = [];
+
+  get currentFolder() {
+    return this.selectedFolders[this.selectedFolders.length - 1];
+  }
 
   constructor(private http: HttpClient) {
     this.files = this.filesSubject.asObservable();
     this.folders = this.foldersSubject.asObservable();
     this.lastPage = this.lastPageSubject.asObservable();
+    this.loading = this.loadingSubject.asObservable();
   }
 
   public getFiles() {
+    this.loadingSubject.next(true);
     const subscription = this.http.get<FileList>(`${this.API_URL}/files`, {
       params: {
         orderBy: 'folder,modifiedTime',
@@ -32,6 +41,7 @@ export class DriveService {
         spaces: 'drive',
       }
     }).subscribe(data => {
+      this.loadingSubject.next(false);
       this.filesSubject.next(data.files.filter(x => x.mimeType !== 'application/vnd.google-apps.folder'));
       this.foldersSubject.next(data.files.filter(x => x.mimeType === 'application/vnd.google-apps.folder'));
       this.setNextPageToken(data.nextPageToken);
@@ -40,6 +50,7 @@ export class DriveService {
   }
 
   public getNextPage() {
+    this.loadingSubject.next(true);
     const subscription = this.http.get<FileList>(`${this.API_URL}/files`, {
       params: {
         pageToken: this.nextPageToken,
@@ -48,6 +59,7 @@ export class DriveService {
         q: `'${this.currentFolder}' in parents`,
       }
     }).subscribe(data => {
+      this.loadingSubject.next(false);
       this.filesSubject.next([
         ...this.filesSubject.value,
         ...data.files.filter(x => x.mimeType !== 'application/vnd.google-apps.folder'),
@@ -62,12 +74,14 @@ export class DriveService {
   }
 
   public downloadFile(file: gapi.client.drive.File) {
+    this.loadingSubject.next(true);
     const subscription = this.http.get(`${this.API_URL}/files/${file.id}`, {
       responseType: 'blob',
       params: {
         alt: 'media',
       }
     }).subscribe(res => {
+      this.loadingSubject.next(false);
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       document.body.appendChild(a);
@@ -87,6 +101,20 @@ export class DriveService {
       this.lastPageSubject.next(true);
     } else {
       this.lastPageSubject.next(false);
+    }
+  }
+
+  changeDirectory(file: gapi.client.drive.File) {
+    this.selectedFolders.push(file.id);
+    this.folderNames.push(file.name);
+    this.getFiles();
+  }
+
+  upDirectory() {
+    if (this.selectedFolders.length > 1) {
+      this.selectedFolders.pop();
+      this.folderNames.pop();
+      this.getFiles();
     }
   }
 

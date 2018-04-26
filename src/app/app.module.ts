@@ -10,12 +10,14 @@ import { AppComponent } from './app.component';
 import { gapiClientConfig } from './gapi.config';
 import { CoreModule } from './core/core.module';
 import { FileListComponent } from './file-list/file-list.component';
+import { RefreshButtonComponent } from './refresh-button/refresh-button.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    FileListComponent
+    FileListComponent,
+    RefreshButtonComponent
   ],
   imports: [
     BrowserModule,

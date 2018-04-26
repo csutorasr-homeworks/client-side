@@ -1,0 +1,14 @@
+h2 {
+  span {
+    &::after {
+      content: ' / ';
+    }
+    &:last-child::after {
+      content: '';
+    }
+  }
+}
+
+.folder {
+  cursor: pointer;
+}
