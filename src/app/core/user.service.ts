@@ -7,16 +7,27 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UserService {
-  public static SESSION_STORAGE_KEY = 'accessToken';
+  private static SESSION_STORAGE_KEY = 'accessToken';
   private user: GoogleUser;
   private isLoggedInSubject = new BehaviorSubject(false);
+  /**
+   * Observable to show if the user is logged in.
+   */
   public isLoggedIn: Observable<boolean>;
 
+  /**
+   * Constructor of the user service
+   * @param googleAuth GoogleAuthService to auth Google
+   * @param zone Zone to run Google promises in the Angular Zone
+   */
   constructor(private googleAuth: GoogleAuthService, private zone: NgZone) {
     this.isLoggedIn = this.isLoggedInSubject.asObservable();
     this.isLoggedInSubject.next(this.isUserSignedIn());
   }
 
+  /**
+   * Gets the token of the Google auth.
+   */
   public getToken(): string {
     const token = sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
     if (!token) {
@@ -25,6 +36,9 @@ export class UserService {
     return sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
   }
 
+  /**
+   * Logs in the user.
+   */
   public signIn(): void {
     this.googleAuth.getAuth()
       .subscribe((auth) => {
@@ -32,6 +46,9 @@ export class UserService {
       });
   }
 
+  /**
+   * Signs the user out.
+   */
   public signOut(): void {
     this.googleAuth.getAuth().subscribe((auth) => {
       try {
@@ -44,6 +61,9 @@ export class UserService {
     });
   }
 
+  /**
+   * Checks if the user is logged in.
+   */
   private isUserSignedIn(): boolean {
     return !!sessionStorage.getItem(UserService.SESSION_STORAGE_KEY);
   }

@@ -16,6 +16,9 @@ export class FileListComponent implements OnInit {
 
   constructor(private driveService: DriveService) { }
 
+  /**
+   * Sets the observables to the given values.
+   */
   ngOnInit() {
     this.load();
     this.files = this.driveService.files;
@@ -25,22 +28,39 @@ export class FileListComponent implements OnInit {
     this.loading = this.driveService.loading;
   }
 
+  /**
+   * Load files of drive.
+   */
   load() {
     this.driveService.getFiles();
   }
 
+  /**
+   * Loads the next page of files.
+   */
   loadNextPage() {
     this.driveService.getNextPage();
   }
 
+  /**
+   * Nofities service to download file.
+   * @param file File to download.
+   */
   download(file: gapi.client.drive.File) {
     this.driveService.downloadFile(file);
   }
 
+  /**
+   * Nofities service to change to a directory.
+   * @param file The directory.
+   */
   changeDirectory(file: gapi.client.drive.File) {
     this.driveService.changeDirectory(file);
   }
 
+  /**
+   * Notifies service to go one directory upper.
+   */
   upDirectory() {
     this.driveService.upDirectory();
   }

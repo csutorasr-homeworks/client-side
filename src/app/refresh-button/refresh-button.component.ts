@@ -11,6 +11,9 @@ export class RefreshButtonComponent {
 
   constructor(private driveService: DriveService) { }
 
+  /**
+   * Reloads the current directory on drive.
+   */
   load() {
     this.driveService.getFiles();
   }

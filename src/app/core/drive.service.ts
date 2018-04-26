@@ -21,7 +21,7 @@ export class DriveService {
   private selectedFolders = ['root'];
   public folderNames = [];
 
-  get currentFolder() {
+  private get currentFolder() {
     return this.selectedFolders[this.selectedFolders.length - 1];
   }
 
@@ -32,6 +32,9 @@ export class DriveService {
     this.loading = this.loadingSubject.asObservable();
   }
 
+  /**
+   * Loads the files of the current directory.
+   */
   public getFiles() {
     this.loadingSubject.next(true);
     const subscription = this.http.get<FileList>(`${this.API_URL}/files`, {
@@ -49,6 +52,9 @@ export class DriveService {
     });
   }
 
+  /**
+   * Loads the next page of the files.
+   */
   public getNextPage() {
     this.loadingSubject.next(true);
     const subscription = this.http.get<FileList>(`${this.API_URL}/files`, {
@@ -73,6 +79,10 @@ export class DriveService {
     });
   }
 
+  /**
+   * Downloads a file from Drive.
+   * @param file The file to download.
+   */
   public downloadFile(file: gapi.client.drive.File) {
     this.loadingSubject.next(true);
     const subscription = this.http.get(`${this.API_URL}/files/${file.id}`, {
@@ -95,7 +105,7 @@ export class DriveService {
     });
   }
 
-  setNextPageToken(token: string): void {
+  private setNextPageToken(token: string): void {
     this.nextPageToken = token;
     if (token) {
       this.lastPageSubject.next(true);
@@ -104,13 +114,20 @@ export class DriveService {
     }
   }
 
-  changeDirectory(file: gapi.client.drive.File) {
+  /**
+   * Changes the current directory with setting foldernames.
+   * @param file The directory to change to.
+   */
+  public changeDirectory(file: gapi.client.drive.File) {
     this.selectedFolders.push(file.id);
     this.folderNames.push(file.name);
     this.getFiles();
   }
 
-  upDirectory() {
+  /**
+   * Changes the directory one level upper.
+   */
+  public upDirectory() {
     if (this.selectedFolders.length > 1) {
       this.selectedFolders.pop();
       this.folderNames.pop();
