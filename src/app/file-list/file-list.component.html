@@ -1,6 +1,15 @@
-<mat-list *ngFor="let file of files | async">
-  <mat-list-item>
-    <p mat-line>{{file.name}}</p>
+<button mat-button (click)="load()">Frissítés</button>
+<mat-list>
+  <h3 mat-subheader>Folders</h3>
+  <mat-list-item *ngFor="let file of folders | async">
+    <h3 mat-line>{{file.name}}</h3>
+  </mat-list-item>
+  <h3 mat-subheader>Files</h3>
+  <mat-list-item *ngFor="let file of files | async">
+    <h3 mat-line>{{file.name}}</h3>
+    <button mat-icon-button (click)="download(file)">
+      <mat-icon>file_download</mat-icon>
+    </button>
   </mat-list-item>
 </mat-list>
-<button mat-button (click)="loadNextPage()">Következő oldal</button>
+<button mat-button (click)="loadNextPage()" *ngIf="lastPage | async">Következő oldal</button>
