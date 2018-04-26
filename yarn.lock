@@ -27,9 +27,15 @@
     "@ngtools/json-schema" "^1.1.0"
     rxjs "^5.5.6"
 
-"@angular/animations@^5.2.0":
+"@angular/animations@^5.2.10":
   version "5.2.10"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-5.2.10.tgz#61718792e0922ac622fd7c6dfb0afbb996638692"
+  dependencies:
+    tslib "^1.7.1"
+
+"@angular/cdk@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-5.2.5.tgz#cae2b12e1990a692dd267a73fdb1d49db37f9604"
   dependencies:
     tslib "^1.7.1"
 
@@ -141,6 +147,12 @@
   version "5.2.10"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-5.2.10.tgz#5699af9d46033faccefeb21d4d168524d2180a8c"
 
+"@angular/material@^5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.2.5.tgz#287af95d234e0644244d9db565f7a05c10b737f8"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/platform-browser-dynamic@^5.2.0":
   version "5.2.10"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.2.10.tgz#bec4c0ca9fb16c34adee851caa187989953216ca"
@@ -193,6 +205,16 @@
     rxjs "^5.5.6"
     semver "^5.3.0"
     semver-intersect "^1.1.2"
+
+"@types/gapi.auth2@^0.0.44":
+  version "0.0.44"
+  resolved "https://registry.yarnpkg.com/@types/gapi.auth2/-/gapi.auth2-0.0.44.tgz#75986149ce9ca2541a66a624173ba580c2cd395c"
+  dependencies:
+    "@types/gapi" "*"
+
+"@types/gapi@*", "@types/gapi@^0.0.35":
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/@types/gapi/-/gapi-0.0.35.tgz#8e0d672d66d8c6ce8493f5e8e550344f7ff500dc"
 
 "@types/jasmine@*", "@types/jasmine@~2.8.3":
   version "2.8.6"
@@ -4072,6 +4094,13 @@ netmask@~1.0.4:
 next-tick@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
+
+ng-gapi@^0.0.50:
+  version "0.0.50"
+  resolved "https://registry.yarnpkg.com/ng-gapi/-/ng-gapi-0.0.50.tgz#53338c0c7e17efac65aaecf30326e071b48f8652"
+  dependencies:
+    "@types/gapi" "^0.0.35"
+    "@types/gapi.auth2" "^0.0.44"
 
 no-case@^2.2.0:
   version "2.3.2"

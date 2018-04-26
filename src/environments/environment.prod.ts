@@ -1,3 +1,6 @@
+import { clientId } from './gapi.config';
+
 export const environment = {
-  production: true
+  production: true,
+  gapiClientId: clientId,
 };
