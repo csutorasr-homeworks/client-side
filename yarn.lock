@@ -212,6 +212,16 @@
   dependencies:
     "@types/gapi" "*"
 
+"@types/gapi.client.drive@v3":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/gapi.client.drive/-/gapi.client.drive-3.0.1.tgz#1b24cd9da58f75de4ac1be29439c54a925d41f1d"
+  dependencies:
+    "@types/gapi.client" "*"
+
+"@types/gapi.client@*":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/gapi.client/-/gapi.client-1.0.0.tgz#aa42501465fcf6440421050da70ec724d4c4c4df"
+
 "@types/gapi@*", "@types/gapi@^0.0.35":
   version "0.0.35"
   resolved "https://registry.yarnpkg.com/@types/gapi/-/gapi-0.0.35.tgz#8e0d672d66d8c6ce8493f5e8e550344f7ff500dc"

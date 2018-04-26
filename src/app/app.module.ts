@@ -8,13 +8,14 @@ import { MaterialModule } from './material/material.module';
 
 import { AppComponent } from './app.component';
 import { gapiClientConfig } from './gapi.config';
-import { UserService } from './user.service';
 import { CoreModule } from './core/core.module';
+import { FileListComponent } from './file-list/file-list.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FileListComponent
   ],
   imports: [
     BrowserModule,
@@ -26,9 +27,6 @@ import { CoreModule } from './core/core.module';
       useValue: gapiClientConfig
     }),
     HttpClientModule,
-  ],
-  providers: [
-    UserService,
   ],
   bootstrap: [AppComponent]
 })
