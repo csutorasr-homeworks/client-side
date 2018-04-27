@@ -13,13 +13,15 @@ import { gapiClientConfig } from './gapi.config';
 import { CoreModule } from './core/core.module';
 import { FileListComponent } from './file-list/file-list.component';
 import { RefreshButtonComponent } from './refresh-button/refresh-button.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FileListComponent,
-    RefreshButtonComponent
+    RefreshButtonComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

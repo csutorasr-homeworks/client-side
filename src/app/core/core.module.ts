@@ -4,6 +4,8 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './token.interceptor';
 import { UserService } from './user.service';
 import { DriveService } from './drive.service';
+import { AuthGuard } from './auth.guard';
+import { UnauthGuard } from './unauth.guard';
 
 @NgModule({
   imports: [
@@ -17,6 +19,8 @@ import { DriveService } from './drive.service';
     },
     UserService,
     DriveService,
+    AuthGuard,
+    UnauthGuard,
   ],
 })
 export class CoreModule { }

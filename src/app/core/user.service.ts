@@ -4,6 +4,7 @@ import GoogleUser = gapi.auth2.GoogleUser;
 import GoogleAuth = gapi.auth2.GoogleAuth;
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class UserService {
@@ -19,10 +20,12 @@ export class UserService {
    * Constructor of the user service
    * @param googleAuth GoogleAuthService to auth Google
    * @param zone Zone to run Google promises in the Angular Zone
+   * @param router The router to change routes on login
    */
-  constructor(private googleAuth: GoogleAuthService, private zone: NgZone) {
+  constructor(private googleAuth: GoogleAuthService, private zone: NgZone, private router: Router) {
     this.isLoggedIn = this.isLoggedInSubject.asObservable();
     this.isLoggedInSubject.next(this.isUserSignedIn());
+    this.isLoggedIn.subscribe(loggedIn => this.router.navigateByUrl(loggedIn ? '/' : '/login'));
   }
 
   /**
