@@ -127,6 +127,7 @@ export class DriveService {
     this.nextPageToken = token;
     if (token) {
       this.lastPageSubject.next(true);
+      this.getNextPage();
     } else {
       this.lastPageSubject.next(false);
     }
