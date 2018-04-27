@@ -2,8 +2,8 @@
   <mat-toolbar-row>
     <span>Drive API</span>
     <span class="example-spacer"></span>
-    <app-refresh-button></app-refresh-button>
     <ng-container *ngIf="signedIn | async; else login">
+      <app-refresh-button></app-refresh-button>
       <button mat-button (click)="signOut()">Kijelentkezés</button>
     </ng-container>
     <ng-template #login>
