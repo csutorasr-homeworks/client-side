@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { map } from 'rxjs/operators';
+import { map, exhaustMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import FileList = gapi.client.drive.FileList;
+import GoogleFile = gapi.client.drive.File;
 
 @Injectable()
 export class DriveService {
   private readonly API_URL = 'https://www.googleapis.com/drive/v3';
+  private readonly UPLOAD_API_URL = 'https://www.googleapis.com/upload/drive/v3/files';
 
   public files: Observable<gapi.client.drive.File[]>;
   private filesSubject = new BehaviorSubject([]);
@@ -101,6 +103,22 @@ export class DriveService {
       a.click();
       window.URL.revokeObjectURL(url);
       a.remove();
+      subscription.unsubscribe();
+    });
+  }
+
+  /**
+   * Uploads a file to Drive.
+   * @param file The file to upload.
+   */
+  public uploadFile(file: File, relativePath: string) {
+    const subscription = this.http.post(`${this.UPLOAD_API_URL}?uploadType=resumable`, {
+      name: file.name,
+      parents: [this.currentFolder],
+    }, { observe: 'response' }).pipe(
+      exhaustMap(data => this.http.patch<GoogleFile>(data.headers.get('Location'), file))
+    ).subscribe(data => {
+      this.getFiles();
       subscription.unsubscribe();
     });
   }
