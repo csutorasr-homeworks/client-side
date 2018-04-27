@@ -73,7 +73,7 @@ export class DriveService {
         ...data.files.filter(x => x.mimeType !== 'application/vnd.google-apps.folder'),
       ]);
       this.foldersSubject.next([
-        ...this.filesSubject.value,
+        ...this.foldersSubject.value,
         ...data.files.filter(x => x.mimeType === 'application/vnd.google-apps.folder'),
       ]);
       this.setNextPageToken(data.nextPageToken);
