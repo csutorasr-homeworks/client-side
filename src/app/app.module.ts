@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { NG_GAPI_CONFIG, GoogleApiModule } from 'ng-gapi';
 import { HttpClientModule } from '@angular/common/http';
+import { FileDropModule } from 'ngx-file-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { MaterialModule } from './material/material.module';
@@ -29,6 +31,8 @@ import { RefreshButtonComponent } from './refresh-button/refresh-button.componen
       useValue: gapiClientConfig
     }),
     HttpClientModule,
+    FileDropModule,
+    BrowserAnimationsModule,
   ],
   bootstrap: [AppComponent]
 })

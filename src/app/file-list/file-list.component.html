@@ -1,18 +1,28 @@
 <h2>
-  <button mat-icon-button *ngIf="folderNames.length > 0" (click)="upDirectory()">
+  <button mat-icon-button *ngIf="folderNames?.length > 0" (click)="upDirectory()">
     <mat-icon>arrow_upward</mat-icon>
   </button>
   <span *ngFor="let name of folderNames">{{name}}</span>
 </h2>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      Feltöltés
+    </mat-expansion-panel-header>
+    <file-drop (onFileDrop)="dropped($event)">
+      <span>Dobd ide a fájlt.</span>
+    </file-drop>
+  </mat-expansion-panel>
+</mat-accordion>
 <mat-progress-bar mode="indeterminate" *ngIf="loading | async; else list"></mat-progress-bar>
 <ng-template #list>
   <mat-list>
-    <h3 mat-subheader *ngIf="(folders | async).length">Folders</h3>
+    <h3 mat-subheader *ngIf="(folders | async)?.length">Folders</h3>
     <mat-list-item *ngFor="let file of folders | async" (click)="changeDirectory(file)" class="folder">
       <mat-icon mat-list-icon>folder</mat-icon>
       <h3 mat-line>{{file.name}}</h3>
     </mat-list-item>
-    <h3 mat-subheader *ngIf="(files | async).length">Files</h3>
+    <h3 mat-subheader *ngIf="(files | async)?.length">Files</h3>
     <mat-list-item *ngFor="let file of files | async">
       <h3 mat-line>{{file.name}}</h3>
       <button mat-icon-button (click)="download(file)">

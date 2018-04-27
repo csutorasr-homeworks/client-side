@@ -5,9 +5,10 @@ import { FileListComponent } from './file-list/file-list.component';
 
 const routes: Routes = [
   {
-    path: 'files',
+    path: '',
     component: FileListComponent,
-  }
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
