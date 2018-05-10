@@ -51,6 +51,8 @@ export class DriveService {
       this.foldersSubject.next(data.files.filter(x => x.mimeType === 'application/vnd.google-apps.folder'));
       this.setNextPageToken(data.nextPageToken);
       subscription.unsubscribe();
+    }, () => {
+      this.loadingSubject.next(false);
     });
   }
 
@@ -78,6 +80,8 @@ export class DriveService {
       ]);
       this.setNextPageToken(data.nextPageToken);
       subscription.unsubscribe();
+    }, () => {
+      this.loadingSubject.next(false);
     });
   }
 
@@ -104,6 +108,8 @@ export class DriveService {
       window.URL.revokeObjectURL(url);
       a.remove();
       subscription.unsubscribe();
+    }, () => {
+      this.loadingSubject.next(false);
     });
   }
 
@@ -112,14 +118,18 @@ export class DriveService {
    * @param file The file to upload.
    */
   public uploadFile(file: File, relativePath: string) {
+    this.loadingSubject.next(true);
     const subscription = this.http.post(`${this.UPLOAD_API_URL}?uploadType=resumable`, {
       name: file.name,
       parents: [this.currentFolder],
     }, { observe: 'response' }).pipe(
       exhaustMap(data => this.http.patch<GoogleFile>(data.headers.get('Location'), file))
     ).subscribe(data => {
+      this.loadingSubject.next(false);
       this.getFiles();
       subscription.unsubscribe();
+    }, () => {
+      this.loadingSubject.next(false);
     });
   }
 
